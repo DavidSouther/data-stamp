@@ -32,5 +32,11 @@ test("Simple Values", function() {
 	equal(dom3.text(), "42", "Basic number converted.");
 });
 
+test("Simple Arrays", function(){
+	var val = [];
+	var dom = data.stamp(val);
+	equal(dom.length, 1, "Returned 1 element.");
+	equal(dom[0].tagName.toLowerCase(), "ul", "Returned element was ul.");
+});
 
 }(jQuery));
