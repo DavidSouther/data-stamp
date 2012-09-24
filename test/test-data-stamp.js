@@ -14,6 +14,7 @@ test("Unit Testing Environment", function () {
 
 test("D-S-Proto", function(){
 	ok(data.stamp, "data.stamp is available.");
+	ok(data.load, "data.load is available.");
 });
 
 test("Simple Values", function() {
@@ -40,7 +41,7 @@ test("Simple Arrays", function(){
 
 	var val2 = [1, 2, 3];
 	var dom2 = data.stamp(val2);
-	equal(dom2.children().length, 3, "Returned list with children.");
+	equal(dom2.find("li").length, 3, "Returned list with children.");
 	equal(dom2.find(":nth-child(2)").text(), "2", "Children have correct names.");
 });
 
@@ -54,6 +55,16 @@ test("Simple Objects", function(){
 	var dom2 = data.stamp(val2);
 	equal(dom2.children().length, 3, "Returned div with 3 children.");
 	equal(dom2.find(":nth-child(3) b").length, 1, "Child has <b> leader.");
+});
+
+test("Complex objects", function(){
+	var val = {a: 1, b: { c: 2, d: 3}, e: [4, 5, 6]};
+	var dom = data.stamp(val);
+	equal(dom.children().length, 3, "Got values back.");
+	equal(dom.children(":nth-child(2)").find("div > span").length, 2, "Sub object has 2 children.");
+	equal(dom.children(":nth-child(2)").find("div > span > b:first").text(), "c", "Correct value in child.");
+	equal(dom.children(":nth-child(3)").find("li").length, 3, "Sub array has list of three.");
+	$("#fixture").append(dom);
 });
 
 }(jQuery));
