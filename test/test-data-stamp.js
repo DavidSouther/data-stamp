@@ -20,7 +20,7 @@ test("Simple Values", function() {
 	var val = "";
 	var dom = data.stamp(val);
 	equal(dom.length, 1, "Returned one element.");
-	equal(dom[0].tagName.toLowerCase(), "div", "Returned element was div.");
+	equal(dom[0].tagName.toLowerCase(), "span", "Returned element was a span.");
 	equal("", dom.text(), "Text is the same.");
 
 	var val2 = "Hello";
@@ -37,6 +37,23 @@ test("Simple Arrays", function(){
 	var dom = data.stamp(val);
 	equal(dom.length, 1, "Returned 1 element.");
 	equal(dom[0].tagName.toLowerCase(), "ul", "Returned element was ul.");
+
+	var val2 = [1, 2, 3];
+	var dom2 = data.stamp(val2);
+	equal(dom2.children().length, 3, "Returned list with children.");
+	equal(dom2.find(":nth-child(2)").text(), "2", "Children have correct names.");
+});
+
+test("Simple Objects", function(){
+	var val = {};
+	var dom = data.stamp(val);
+	equal(dom.length, 1, "Returned 1 element.");
+	equal(dom[0].tagName.toLowerCase(), "div", "Returned element was div.");
+
+	var val2 = {a: 1, b: 2, c: 3};
+	var dom2 = data.stamp(val2);
+	equal(dom2.children().length, 3, "Returned div with 3 children.");
+	equal(dom2.find(":nth-child(3) b").length, 1, "Child has <b> leader.");
 });
 
 }(jQuery));
